@@ -49,21 +49,10 @@ public class User extends Auditable
           message = "Password must 4 or more characters")
     private String password;
 
-    @Column(nullable = false,
-            unique = true)
-    @Email(message = "Email should be valid format username@domain.toplevel")
-    private String primaryemail;
-
     @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<UserRoles> userroles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user",
-               cascade = CascadeType.ALL,
-               orphanRemoval = true)
-    @JsonIgnoreProperties("user")
-    private List<Useremail> useremails = new ArrayList<>();
 
     public User()
     {
@@ -71,12 +60,10 @@ public class User extends Auditable
 
     public User(String username,
                 String password,
-                String primaryemail,
                 List<UserRoles> userRoles)
     {
         setUsername(username);
         setPassword(password);
-        this.primaryemail = primaryemail;
         for (UserRoles ur : userRoles)
         {
             ur.setUser(this);
@@ -110,22 +97,6 @@ public class User extends Auditable
         this.username = username.toLowerCase();
     }
 
-    public String getPrimaryemail()
-    {
-        if (primaryemail == null) // this is possible when updating a user
-        {
-            return null;
-        } else
-        {
-            return primaryemail.toLowerCase();
-        }
-    }
-
-    public void setPrimaryemail(String primaryemail)
-    {
-        this.primaryemail = primaryemail.toLowerCase();
-    }
-
     public String getPassword()
     {
         return password;
@@ -150,16 +121,6 @@ public class User extends Auditable
     public void setUserroles(List<UserRoles> userroles)
     {
         this.userroles = userroles;
-    }
-
-    public List<Useremail> getUseremails()
-    {
-        return useremails;
-    }
-
-    public void setUseremails(List<Useremail> useremails)
-    {
-        this.useremails = useremails;
     }
 
     @JsonIgnore

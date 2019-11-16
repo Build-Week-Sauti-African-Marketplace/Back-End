@@ -6,7 +6,6 @@ import local.tyler.africanmarketplace.logging.Loggable;
 import local.tyler.africanmarketplace.models.Role;
 import local.tyler.africanmarketplace.models.User;
 import local.tyler.africanmarketplace.models.UserRoles;
-import local.tyler.africanmarketplace.models.Useremail;
 import local.tyler.africanmarketplace.repository.RoleRepository;
 import local.tyler.africanmarketplace.repository.UserRepository;
 import local.tyler.africanmarketplace.view.UserNameCountEmails;
@@ -91,8 +90,6 @@ public class UserServiceImpl implements UserService
         newUser.setUsername(user.getUsername()
                                 .toLowerCase());
         newUser.setPasswordNotEncrypt(user.getPassword());
-        newUser.setPrimaryemail(user.getPrimaryemail()
-                                    .toLowerCase());
 
         ArrayList<UserRoles> newRoles = new ArrayList<>();
         for (UserRoles ur : user.getUserroles())
@@ -106,12 +103,7 @@ public class UserServiceImpl implements UserService
         }
         newUser.setUserroles(newRoles);
 
-        for (Useremail ue : user.getUseremails())
-        {
-            newUser.getUseremails()
-                   .add(new Useremail(newUser,
-                                      ue.getUseremail()));
-        }
+
 
         return userrepos.save(newUser);
     }
@@ -142,27 +134,10 @@ public class UserServiceImpl implements UserService
                 currentUser.setPasswordNotEncrypt(user.getPassword());
             }
 
-            if (user.getPrimaryemail() != null)
-            {
-                currentUser.setPrimaryemail(user.getPrimaryemail()
-                                                .toLowerCase());
-            }
-
             if (user.getUserroles()
                     .size() > 0)
             {
                 throw new ResourceFoundException("User Roles are not updated through User. See endpoint POST: users/user/{userid}/role/{roleid}");
-            }
-
-            if (user.getUseremails()
-                    .size() > 0)
-            {
-                for (Useremail ue : user.getUseremails())
-                {
-                    currentUser.getUseremails()
-                               .add(new Useremail(currentUser,
-                                                  ue.getUseremail()));
-                }
             }
 
             return userrepos.save(currentUser);

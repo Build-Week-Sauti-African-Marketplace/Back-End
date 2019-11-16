@@ -6,7 +6,6 @@ import local.tyler.africanmarketplace.exceptions.ResourceNotFoundException;
 import local.tyler.africanmarketplace.models.Role;
 import local.tyler.africanmarketplace.models.User;
 import local.tyler.africanmarketplace.models.UserRoles;
-import local.tyler.africanmarketplace.models.Useremail;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -122,22 +121,13 @@ public class UserServiceImplUnitTest
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("tiger",
                            "ILuvMath!",
-                           "tiger@school.lambda",
                            datas);
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "tiger@tiger.local"));
 
         User saveU2 = userService.save(u2);
 
         System.out.println("*** DATA ***");
         System.out.println(saveU2);
         System.out.println("*** DATA ***");
-
-        assertEquals("tiger@tiger.local",
-                     saveU2.getUseremails()
-                           .get(0)
-                           .getUseremail());
     }
 
     @Test(expected = ResourceFoundException.class)
@@ -146,22 +136,13 @@ public class UserServiceImplUnitTest
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("cinnamon",
                            "ILuvMath!",
-                           "cinnamon@school.lambda",
                            datas);
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "tiger@tiger.local"));
 
         User saveU2 = userService.save(u2);
 
         System.out.println("*** DATA ***");
         System.out.println(saveU2);
         System.out.println("*** DATA ***");
-
-        assertEquals("tiger@tiger.local",
-                     saveU2.getUseremails()
-                           .get(0)
-                           .getUseremail());
     }
 
     @Transactional
@@ -172,17 +153,7 @@ public class UserServiceImplUnitTest
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("cinnamon",
                            "password",
-                           "cinnamon@school.lambda",
                            datas);
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "cinnamon@mymail.thump"));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "hops@mymail.thump"));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "bunny@email.thump"));
 
         User updatedu2 = userService.update(u2,
                                             7,
@@ -191,13 +162,6 @@ public class UserServiceImplUnitTest
         System.out.println("*** DATA ***");
         System.out.println(updatedu2);
         System.out.println("*** DATA ***");
-
-        int checking = updatedu2.getUseremails()
-                                .size() - 1;
-        assertEquals("bunny@email.thump",
-                     updatedu2.getUseremails()
-                              .get(checking)
-                              .getUseremail());
     }
 
     @Transactional
@@ -210,19 +174,9 @@ public class UserServiceImplUnitTest
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("cinnamon",
                            "password",
-                           "cinnamon@school.lambda",
                            datas);
         datas.add(new UserRoles(u2,
                                 r2));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "cinnamon@mymail.thump"));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "hops@mymail.thump"));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "bunny@email.thump"));
 
         User updatedu2 = userService.update(u2,
                                             7,
@@ -232,12 +186,6 @@ public class UserServiceImplUnitTest
         System.out.println(updatedu2);
         System.out.println("*** DATA ***");
 
-        int checking = updatedu2.getUseremails()
-                                .size() - 1;
-        assertEquals("bunny@email.thump",
-                     updatedu2.getUseremails()
-                              .get(checking)
-                              .getUseremail());
     }
 
     @Transactional
@@ -250,17 +198,7 @@ public class UserServiceImplUnitTest
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("cinnamon",
                            "password",
-                           "cinnamon@school.lambda",
                            datas);
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "cinnamon@mymail.thump"));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "hops@mymail.thump"));
-        u2.getUseremails()
-          .add(new Useremail(u2,
-                             "bunny@email.thump"));
 
         User updatedu2 = userService.update(u2,
                                             8,
@@ -270,12 +208,6 @@ public class UserServiceImplUnitTest
         System.out.println(updatedu2);
         System.out.println("*** DATA ***");
 
-        int checking = updatedu2.getUseremails()
-                                .size() - 1;
-        assertEquals("bunny@email.thump",
-                     updatedu2.getUseremails()
-                              .get(checking)
-                              .getUseremail());
     }
 
     @Test(expected = ResourceNotFoundException.class)
