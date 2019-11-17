@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface ItemRepository extends CrudRepository<Item, Long>
-{
+public interface ItemRepository extends CrudRepository<Item, Long> {
+
+    Item findByName(String itemName);
 
 }

@@ -31,9 +31,9 @@ public class Item {
     @JsonIgnoreProperties("items")
     private User user;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("items")
-    private List<Currency> currencies = new ArrayList<>();
+    private Currency currency;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("items")
@@ -98,12 +98,12 @@ public class Item {
         this.price = price;
     }
 
-    public List<Currency> getCurrencies() {
-        return currencies;
+    public Currency getCurrency() {
+        return currency;
     }
 
-    public void setCurrencies(List<Currency> currencies) {
-        this.currencies = currencies;
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     public List<Category> getCategories() {

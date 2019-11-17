@@ -9,21 +9,22 @@ import javax.persistence.*;
 @JsonIgnoreProperties("item")
 public class Currency {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long currencyid;
+
+    /*@GeneratedValue(strategy = GenerationType.AUTO)
+    private long currencyid;*/
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Id
+    @Column(nullable = false, unique = true)
     private String code;
 
     @Column(nullable = false)
     private String symbol;
 
-    @ManyToOne
-    @JoinColumn(name = "itemid", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "itemid", referencedColumnName = "itemid", nullable = false)
     @JsonIgnoreProperties({"currencies", "user"})
     private Item item;
 
@@ -36,13 +37,13 @@ public class Currency {
         this.item = item;
     }
 
-    public long getCurrencyid() {
+    /*public long getCurrencyid() {
         return currencyid;
     }
 
     public void setCurrencyid(long currencyid) {
         this.currencyid = currencyid;
-    }
+    }*/
 
     public String getName() {
         return name;

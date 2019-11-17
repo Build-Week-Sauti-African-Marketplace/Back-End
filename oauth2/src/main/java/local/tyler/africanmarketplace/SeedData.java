@@ -3,11 +3,9 @@ package local.tyler.africanmarketplace;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
-import local.tyler.africanmarketplace.models.Item;
-import local.tyler.africanmarketplace.models.Role;
-import local.tyler.africanmarketplace.models.User;
-import local.tyler.africanmarketplace.models.UserRoles;
+import local.tyler.africanmarketplace.models.*;
 import local.tyler.africanmarketplace.repository.ItemRepository;
+import local.tyler.africanmarketplace.services.ItemService;
 import local.tyler.africanmarketplace.services.RoleService;
 import local.tyler.africanmarketplace.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 @Transactional
@@ -27,6 +26,9 @@ public class SeedData implements CommandLineRunner
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ItemService itemService;
 
 
     @Override
@@ -58,6 +60,22 @@ public class SeedData implements CommandLineRunner
                            users);
 
         userService.save(u2);
+
+        User test = userService.findUserById(12);
+
+        Item item = new Item("there", "not milk", "not a gallon of milk", 7.00, test);
+
+        List<Category> categories = new ArrayList<>();
+        Category category = new Category("Not produce", item);
+        categories.add(category);
+        item.setCategories(categories);
+
+        Currency currency = new Currency("Pounds", "EGP", "£", item);
+        item.setCurrency(currency);
+
+        itemService.addItem(item);
+
+
 
 
 
