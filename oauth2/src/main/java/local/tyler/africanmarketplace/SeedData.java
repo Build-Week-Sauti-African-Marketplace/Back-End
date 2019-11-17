@@ -3,9 +3,11 @@ package local.tyler.africanmarketplace;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+import local.tyler.africanmarketplace.models.Item;
 import local.tyler.africanmarketplace.models.Role;
 import local.tyler.africanmarketplace.models.User;
 import local.tyler.africanmarketplace.models.UserRoles;
+import local.tyler.africanmarketplace.repository.ItemRepository;
 import local.tyler.africanmarketplace.services.RoleService;
 import local.tyler.africanmarketplace.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +52,14 @@ public class SeedData implements CommandLineRunner
 
         // user
         ArrayList<UserRoles> users = new ArrayList<>();
-        users.add(new UserRoles(new User(),
-                                r2));
+        users.add(new UserRoles(new User(), r2));
         User u2 = new User("user",
                            "user",
                            users);
+
         userService.save(u2);
+
+
 
 
 
