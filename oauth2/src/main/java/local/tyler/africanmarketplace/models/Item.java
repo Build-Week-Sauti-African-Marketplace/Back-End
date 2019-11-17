@@ -3,6 +3,8 @@ package local.tyler.africanmarketplace.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "items")
@@ -28,6 +30,15 @@ public class Item {
     @JoinColumn(name = "userid", nullable = false)
     @JsonIgnoreProperties("items")
     private User user;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("items")
+    private List<Currency> currencies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("items")
+    private List<Category> categories = new ArrayList<>();
+
 
     public Item(){}
 
@@ -85,5 +96,21 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<Currency> getCurrencies() {
+        return currencies;
+    }
+
+    public void setCurrencies(List<Currency> currencies) {
+        this.currencies = currencies;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }
