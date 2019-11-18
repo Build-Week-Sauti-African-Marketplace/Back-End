@@ -6,12 +6,8 @@ import local.tyler.africanmarketplace.models.Currency;
 import local.tyler.africanmarketplace.models.Item;
 import local.tyler.africanmarketplace.models.User;
 import local.tyler.africanmarketplace.repository.ItemRepository;
-import local.tyler.africanmarketplace.repository.UserRepository;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
