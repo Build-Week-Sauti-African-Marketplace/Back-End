@@ -108,7 +108,7 @@
     </dependencies>
 
     <build>
-        <finalName>jrmmba-usermodel</finalName>
+        <finalName>tylerb-africanmarket</finalName>
 
         <plugins>
             <plugin>
