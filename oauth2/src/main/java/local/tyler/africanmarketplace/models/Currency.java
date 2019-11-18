@@ -3,15 +3,13 @@ package local.tyler.africanmarketplace.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "currencies")
 @JsonIgnoreProperties("item")
 public class Currency {
-
-
-    /*@GeneratedValue(strategy = GenerationType.AUTO)
-    private long currencyid;*/
 
     @Column(nullable = false)
     private String name;
@@ -23,27 +21,27 @@ public class Currency {
     @Column(nullable = false)
     private String symbol;
 
-    @OneToOne
-    @JoinColumn(name = "itemid", referencedColumnName = "itemid", nullable = false)
-    @JsonIgnoreProperties({"currencies", "user"})
-    private Item item;
+    @Column(nullable = false)
+    private double valueInUSD;
+
+    @OneToMany(mappedBy = "currency", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("currencies")
+    private List<Item> items = new ArrayList<>();
 
     public Currency(){}
 
-    public Currency(String name, String code, String symbol, Item item) {
+    public Currency(String name, String code, String symbol, List<Item> items) {
         this.name = name;
         this.code = code;
         this.symbol = symbol;
-        this.item = item;
+        this.items = items;
     }
 
-    /*public long getCurrencyid() {
-        return currencyid;
+    public Currency(String name, String code, String symbol) {
+        this.name = name;
+        this.code = code;
+        this.symbol = symbol;
     }
-
-    public void setCurrencyid(long currencyid) {
-        this.currencyid = currencyid;
-    }*/
 
     public String getName() {
         return name;
@@ -69,11 +67,19 @@ public class Currency {
         this.symbol = symbol;
     }
 
-    public Item getItem() {
-        return item;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public double getValueInUSD() {
+        return valueInUSD;
+    }
+
+    public void setValueInUSD(double valueInUSD) {
+        this.valueInUSD = valueInUSD;
     }
 }

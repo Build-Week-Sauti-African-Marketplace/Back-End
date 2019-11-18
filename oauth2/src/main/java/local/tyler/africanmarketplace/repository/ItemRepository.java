@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface ItemRepository extends CrudRepository<Item, Long> {
 
-    Item findByName(String itemName);
+    Item findByNameIgnoreCase(String itemName);
 
 }

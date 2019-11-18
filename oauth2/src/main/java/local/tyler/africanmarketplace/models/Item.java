@@ -28,17 +28,17 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
-    @JsonIgnoreProperties("items")
+    @JsonIgnoreProperties({"items", "userroles"})
     private User user;
 
-    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("items")
+    @ManyToOne
+    @JoinColumn(name = "code")
+    @JsonIgnoreProperties({"items", "userroles"})
     private Currency currency;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("items")
     private List<Category> categories = new ArrayList<>();
-
 
     public Item(){}
 

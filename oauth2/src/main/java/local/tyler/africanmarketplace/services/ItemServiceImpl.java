@@ -24,6 +24,9 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CurrencyService currencyService;
+
     @Override
     public List<Item> getAllItems() {
         List<Item> list = new ArrayList<>();
@@ -38,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItemByName(String itemName) {
-        return itemRepository.findByName(itemName);
+        return itemRepository.findByNameIgnoreCase(itemName);
     }
 
     @Override
@@ -57,9 +60,9 @@ public class ItemServiceImpl implements ItemService {
             createItem.getCategories().add(createCategory);
         }
 
-        Currency c = item.getCurrency();
-        Currency createCurrency = new Currency(c.getName(), c.getCode() , c.getSymbol(), createItem);
-        createItem.setCurrency(createCurrency);
+        Currency c = currencyService.getCurrencyByCode(item.getCurrency().getCode());
+        createItem.setCurrency(c);
+
 
         return itemRepository.save(createItem);
     }
