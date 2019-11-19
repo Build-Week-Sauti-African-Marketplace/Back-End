@@ -36,9 +36,10 @@ public class Item {
     @JsonIgnoreProperties({"items", "userroles"})
     private Currency currency;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("items")
-    private List<Category> categories = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "type")
+    @JsonIgnoreProperties({"items", "userroles"})
+    private Category category;
 
     public Item(){}
 
@@ -106,11 +107,11 @@ public class Item {
         this.currency = currency;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

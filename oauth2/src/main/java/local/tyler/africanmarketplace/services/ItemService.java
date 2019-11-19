@@ -10,8 +10,10 @@ public interface ItemService {
 
     Item getItemById(long id);
 
-    Item getItemByName(String itemName);
+    List<Item> getItemsByName(String name);
 
     Item addItem(Item item);
+
+    List<Item> getItemsByNameContaining(String name);
 
 }
