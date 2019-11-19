@@ -175,8 +175,5 @@ public class SeedData implements CommandLineRunner {
         categoryRepository.save(category8);
 
 
-
-
-
     }
 }

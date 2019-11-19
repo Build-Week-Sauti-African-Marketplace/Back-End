@@ -26,6 +26,9 @@ public class Item {
     @Column(nullable = false)
     private double price;
 
+    @Transient
+    public boolean hasPrice = false;
+
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
     @JsonIgnoreProperties({"items", "userroles"})
@@ -92,10 +95,12 @@ public class Item {
     }
 
     public double getPrice() {
+
         return price;
     }
 
     public void setPrice(double price) {
+        hasPrice = true;
         this.price = price;
     }
 
