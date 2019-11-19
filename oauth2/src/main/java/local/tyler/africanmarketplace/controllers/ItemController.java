@@ -40,6 +40,12 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/useritems")
+    public ResponseEntity<?> listUserItems() {
+        List<Item> items = itemService.getUsersItems();
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/item")
     public ResponseEntity<?> addItem(@RequestBody Item item) {
         item = itemService.addItem(item);

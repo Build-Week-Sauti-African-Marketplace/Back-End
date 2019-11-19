@@ -20,4 +20,6 @@ public interface ItemService {
 
     Item updateItem(long id, Item item);
 
+    List<Item> getUsersItems();
+
 }

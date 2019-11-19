@@ -58,6 +58,12 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findAllByNameContainingIgnoreCase(name);
     }
 
+    @Override
+    public List<Item> getUsersItems() {
+        User currentUser = userService.getCurrentUser();
+        return currentUser.getItems();
+    }
+
     @Transactional
     @Override
     public Item addItem(Item item) {
@@ -112,6 +118,8 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.save(currentItem);
 
     }
+
+
 
     @Override
     public void deleteItem(long id) {
