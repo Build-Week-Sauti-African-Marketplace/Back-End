@@ -7,6 +7,8 @@ import local.tyler.africanmarketplace.models.Item;
 import local.tyler.africanmarketplace.models.User;
 import local.tyler.africanmarketplace.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,9 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     CurrencyService currencyService;
 
+    @Autowired
+    CategoryService categoryService;
+
     @Override
     public List<Item> getAllItems() {
         List<Item> list = new ArrayList<>();
@@ -36,13 +41,27 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item getItemByName(String itemName) {
-        return itemRepository.findByNameIgnoreCase(itemName);
+    public List<Item> getItemsByName(String name) {
+        return itemRepository.findAllByNameIgnoreCase(name);
+    }
+
+    @Override
+    public List<Item> getItemsByNameContaining(String name) {
+        return itemRepository.findAllByNameContainingIgnoreCase(name);
     }
 
     @Override
     public Item addItem(Item item) {
-        User currentUser = userService.findUserById(item.getUser().getUserid());
+
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        User currentUser = userService.findByName(username);
         Item createItem = new Item();
 
         createItem.setLocation(item.getLocation());
@@ -51,17 +70,17 @@ public class ItemServiceImpl implements ItemService {
         createItem.setPrice(item.getPrice());
         createItem.setUser(currentUser);
 
-        for (Category c : item.getCategories()) {
-            Category createCategory = new Category(c.getType(), createItem);
-            createItem.getCategories().add(createCategory);
-        }
+        Category category = categoryService.getCategoryByType(item.getCategory().getType());
+        createItem.setCategory(category);
 
-        Currency c = currencyService.getCurrencyByCode(item.getCurrency().getCode());
-        createItem.setCurrency(c);
+        Currency currency = currencyService.getCurrencyByCode(item.getCurrency().getCode());
+        createItem.setCurrency(currency);
 
 
         return itemRepository.save(createItem);
     }
+
+
 
 
 }

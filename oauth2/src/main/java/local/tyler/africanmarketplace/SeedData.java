@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 import local.tyler.africanmarketplace.models.*;
+import local.tyler.africanmarketplace.repository.CategoryRepository;
 import local.tyler.africanmarketplace.repository.CurrencyRepository;
 import local.tyler.africanmarketplace.repository.ItemRepository;
 import local.tyler.africanmarketplace.services.CurrencyService;
@@ -12,12 +13,12 @@ import local.tyler.africanmarketplace.services.RoleService;
 import local.tyler.africanmarketplace.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 @Transactional
 @Component
@@ -32,15 +33,17 @@ public class SeedData implements CommandLineRunner {
     ItemService itemService;
 
     @Autowired
-    CurrencyService currencyService;
+    CurrencyRepository currencyRepository;
 
     @Autowired
-    CurrencyRepository currencyRepository;
+    CategoryRepository categoryRepository;
+
+
 
 
     @Override
     public void run(String[] args) throws Exception {
-        /*Role r1 = new Role("admin");
+        Role r1 = new Role("admin");
         Role r2 = new Role("user");
 
         r1 = roleService.save(r1);
@@ -65,7 +68,7 @@ public class SeedData implements CommandLineRunner {
                 "user",
                 users);
 
-        userService.save(u2);*/
+        userService.save(u2);
 
         Currency currency1 = new Currency("Algerian dinar", "DZD", "دج");
         Currency currency2 = new Currency("Angolan kwanza", "AOA", "Kz");
@@ -153,17 +156,26 @@ public class SeedData implements CommandLineRunner {
         currencyRepository.save(currency41);
         currencyRepository.save(currency42);
 
+        Category category1 = new Category("Electronics");
+        Category category2 = new Category("Clothing & Accessories");
+        Category category3 = new Category("Hobbies");
+        Category category4 = new Category("Home & Garden");
+        Category category5 = new Category("Entertainment");
+        Category category6 = new Category("Family");
+        Category category7 = new Category("Grocery");
+        Category category8 = new Category("Other");
 
-        /*User test = userService.findUserById(12);
-        Item item = new Item("there", "not milk", "not a gallon of milk", 7.00, test);
+        categoryRepository.save(category1);
+        categoryRepository.save(category2);
+        categoryRepository.save(category3);
+        categoryRepository.save(category4);
+        categoryRepository.save(category5);
+        categoryRepository.save(category6);
+        categoryRepository.save(category7);
+        categoryRepository.save(category8);
 
-        List<Category> categories = new ArrayList<>();
-        Category category = new Category("Not produce", item);
-        categories.add(category);
-        item.setCategories(categories);
-        item.setCurrency(currency19);
 
-        itemService.addItem(item);*/
+
 
 
     }

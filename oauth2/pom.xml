@@ -108,7 +108,7 @@
     </dependencies>
 
     <build>
-        <finalName>tylerb-africanmarket</finalName>
+        <finalName>africanmarketplace</finalName>
 
         <plugins>
             <plugin>

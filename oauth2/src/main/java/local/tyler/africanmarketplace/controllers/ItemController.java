@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("items")
+@RequestMapping("/items")
 public class ItemController {
 
     @Autowired
@@ -29,9 +29,15 @@ public class ItemController {
     }
 
     @GetMapping(value = "/itemname/{name}")
-    public ResponseEntity<?> getItemById(@PathVariable String name) {
-        Item item = itemService.getItemByName(name);
-        return new ResponseEntity<>(item, HttpStatus.OK);
+    public ResponseEntity<?> getItemsByName(@PathVariable String name) {
+        List<Item> items = itemService.getItemsByName(name);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/itemname/contains/{name}")
+    public ResponseEntity<?> getItemsByLikeName(@PathVariable String name) {
+        List<Item> items = itemService.getItemsByNameContaining(name);
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @PostMapping(value = "/item")

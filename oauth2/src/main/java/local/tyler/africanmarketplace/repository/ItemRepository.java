@@ -8,8 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface ItemRepository extends CrudRepository<Item, Long> {
 
-    Item findByNameIgnoreCase(String itemName);
+    List<Item> findAllByNameIgnoreCase(String name);
+
+    List<Item> findAllByNameContainingIgnoreCase(String name);
 
 }
