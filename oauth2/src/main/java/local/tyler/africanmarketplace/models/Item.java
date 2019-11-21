@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "items")
+@JsonIgnoreProperties("hasPrice")
 public class Item {
 
     @Id
@@ -36,7 +37,7 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "code")
-    @JsonIgnoreProperties({"items", "userroles"})
+    @JsonIgnoreProperties({"items", "userroles","hasValue"})
     private Currency currency;
 
     @ManyToOne

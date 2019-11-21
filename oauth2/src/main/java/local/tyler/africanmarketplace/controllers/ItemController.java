@@ -46,6 +46,12 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/items/{code}")
+    public ResponseEntity<?> listItemsByCurrency(@PathVariable String code) {
+        List<Item> items = itemService.getItemsByCurrency(code);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/item")
     public ResponseEntity<?> addItem(@RequestBody Item item) {
         item = itemService.addItem(item);

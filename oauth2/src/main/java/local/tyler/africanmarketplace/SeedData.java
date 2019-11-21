@@ -19,9 +19,10 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 
-/*@Transactional
-@Component*/
+@Transactional
+@Component
 public class SeedData implements CommandLineRunner {
     @Autowired
     RoleService roleService;
@@ -37,6 +38,9 @@ public class SeedData implements CommandLineRunner {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    ItemRepository itemRepository;
 
 
 
@@ -113,6 +117,10 @@ public class SeedData implements CommandLineRunner {
         Currency currency41 = new Currency("Zambian kwacha", "ZMW", "");
         Currency currency42 = new Currency("RTGS Dollar", "ZBN", "");
 
+        currency1.setValueInUSD(0.00832764);
+        currency2.setValueInUSD(0.00214954);
+        currency30.setValueInUSD(4.50144e-05);
+
         currencyRepository.save(currency1);
         currencyRepository.save(currency2);
         currencyRepository.save(currency3);
@@ -173,6 +181,18 @@ public class SeedData implements CommandLineRunner {
         categoryRepository.save(category6);
         categoryRepository.save(category7);
         categoryRepository.save(category8);
+
+        Item item = new Item("here", "name", "desc", 12.21, userService.findByName("user"));
+        item.setCurrency(currencyRepository.findByCodeIgnoreCase(currency1.getCode()));
+        item.setCategory(categoryRepository.findByTypeIgnoreCase(category1.getType()));
+        itemRepository.save(item);
+        Item item1 = new Item("there1", "name1", "desck", 120.21, userService.findByName("user"));
+        item1.setCurrency(currencyRepository.findByCodeIgnoreCase(currency2.getCode()));
+        item1.setCategory(categoryRepository.findByTypeIgnoreCase(category2.getType()));
+        itemRepository.save(item1);
+
+        //List<Item> test = itemService.getItemsByCurrency("aoa");
+
 
 
     }

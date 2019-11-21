@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,27 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getUsersItems() {
         User currentUser = userService.getCurrentUser();
         return currentUser.getItems();
+    }
+
+    @Override
+    public List<Item> getItemsByCurrency(String code) {
+        List<Item> items = getAllItems();
+        List<Item> convertedItems = new ArrayList<>();
+        Currency currency = currencyService.getCurrencyByCode(code);
+        double usd = currency.getValueInUSD();
+        NumberFormat formatter = new DecimalFormat("##.##");
+        for (Item item : items) {
+            double itemPrice = item.getPrice();
+            double itemCurrency = item.getCurrency().getValueInUSD();
+            double itemUSD = itemPrice * itemCurrency;
+            double newTotal = itemUSD / usd;
+            double totalFormat = Double.parseDouble(formatter.format(newTotal));
+            Item test = new Item(item.getLocation(), item.getName(), item.getDescription(), totalFormat, item.getUser());
+            test.setCurrency(currency);
+            test.setCategory(item.getCategory());
+            convertedItems.add(test);
+        }
+        return convertedItems;
     }
 
     @Transactional

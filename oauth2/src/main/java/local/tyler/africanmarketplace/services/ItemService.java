@@ -22,4 +22,6 @@ public interface ItemService {
 
     List<Item> getUsersItems();
 
+    List<Item> getItemsByCurrency(String code);
+
 }

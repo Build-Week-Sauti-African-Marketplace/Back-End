@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "currencies")
-@JsonIgnoreProperties("item")
+@JsonIgnoreProperties({"item", "hasValue"})
 public class Currency {
 
     @Column(nullable = false)
@@ -23,6 +23,9 @@ public class Currency {
 
     @Column(nullable = false)
     private double valueInUSD;
+
+    @Transient
+    public boolean hasValue = false;
 
     @OneToMany(mappedBy = "currency", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("currencies")
@@ -80,6 +83,7 @@ public class Currency {
     }
 
     public void setValueInUSD(double valueInUSD) {
+        hasValue = true;
         this.valueInUSD = valueInUSD;
     }
 }

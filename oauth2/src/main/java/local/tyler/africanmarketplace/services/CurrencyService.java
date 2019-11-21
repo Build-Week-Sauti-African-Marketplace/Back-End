@@ -9,4 +9,6 @@ public interface CurrencyService {
     Currency getCurrencyByCode(String code);
 
     List<Currency> getAllCurrencies();
+
+    Currency updateCurrencies(String code, Currency currency);
 }
