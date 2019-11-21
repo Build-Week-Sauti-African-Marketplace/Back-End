@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "items")
+@JsonIgnoreProperties("hasPrice")
 public class Item {
 
     @Id
@@ -26,6 +27,11 @@ public class Item {
     @Column(nullable = false)
     private double price;
 
+    private String url;
+
+    @Transient
+    public boolean hasPrice = false;
+
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
     @JsonIgnoreProperties({"items", "userroles"})
@@ -33,7 +39,7 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "code")
-    @JsonIgnoreProperties({"items", "userroles"})
+    @JsonIgnoreProperties({"items", "userroles","hasValue"})
     private Currency currency;
 
     @ManyToOne
@@ -92,10 +98,12 @@ public class Item {
     }
 
     public double getPrice() {
+
         return price;
     }
 
     public void setPrice(double price) {
+        hasPrice = true;
         this.price = price;
     }
 
@@ -113,5 +121,13 @@ public class Item {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -40,10 +40,34 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/useritems")
+    public ResponseEntity<?> listUserItems() {
+        List<Item> items = itemService.getUsersItems();
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/items/{code}")
+    public ResponseEntity<?> listItemsByCurrency(@PathVariable String code) {
+        List<Item> items = itemService.getItemsByCurrency(code);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/item")
     public ResponseEntity<?> addItem(@RequestBody Item item) {
         item = itemService.addItem(item);
         return new ResponseEntity<>("Item's id: " + item.getItemid(), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/item/{id}")
+    public ResponseEntity<?> updateItem(@PathVariable long id, @RequestBody Item item) {
+        itemService.updateItem(id, item);
+        return new ResponseEntity<>("Item Updated", HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/item/{id}")
+    public ResponseEntity<?> deleteItemById(@PathVariable long id) {
+        itemService.deleteItem(id);
+        return new ResponseEntity<>("Item deleted", HttpStatus.OK);
     }
 
 }

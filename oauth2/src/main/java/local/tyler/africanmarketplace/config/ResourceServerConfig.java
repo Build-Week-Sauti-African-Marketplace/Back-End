@@ -42,11 +42,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
                     "/oauth/revoke-token",
                          "/logout",
                     "/items/**",
-                    "/categories",
-                    "/currencies/**")
+                    "/categories/**",
+                    "/currencies/**",
+                    "image/upload")
             .authenticated()
             .antMatchers("/roles/**",
-                         "/actuator/**")
+                         "/actuator/**",
+                    "/image/uploadform")
             .hasAnyRole("ADMIN")
             .antMatchers("/data/**")
             .hasAnyRole("ADMIN",

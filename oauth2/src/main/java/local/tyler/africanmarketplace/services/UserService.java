@@ -32,4 +32,6 @@ public interface UserService
                      long roleid);
 
     List<UserNameCountEmails> getCountUserEmails();
+
+    User getCurrentUser();
 }

@@ -6,9 +6,8 @@ import local.tyler.africanmarketplace.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +21,13 @@ public class CurrencyController {
     public ResponseEntity<?> listAllCurrencies() {
         List<Currency> currencies = currencyService.getAllCurrencies();
         return new ResponseEntity<>(currencies, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PutMapping(value = "/currencyupdate/{code}")
+    public ResponseEntity<?> updateItem(@PathVariable String code, @RequestBody Currency currency) {
+        currencyService.updateCurrencies(code, currency);
+        return new ResponseEntity<>("Currency Updated", HttpStatus.OK);
     }
 
 }

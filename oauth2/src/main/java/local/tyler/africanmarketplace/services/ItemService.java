@@ -16,4 +16,12 @@ public interface ItemService {
 
     List<Item> getItemsByNameContaining(String name);
 
+    void deleteItem(long id);
+
+    Item updateItem(long id, Item item);
+
+    List<Item> getUsersItems();
+
+    List<Item> getItemsByCurrency(String code);
+
 }
