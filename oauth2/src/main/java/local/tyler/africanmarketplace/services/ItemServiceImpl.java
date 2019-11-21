@@ -79,10 +79,10 @@ public class ItemServiceImpl implements ItemService {
             double itemUSD = itemPrice * itemCurrency;
             double newTotal = itemUSD / usd;
             double totalFormat = Double.parseDouble(formatter.format(newTotal));
-            Item test = new Item(item.getLocation(), item.getName(), item.getDescription(), totalFormat, item.getUser());
-            test.setCurrency(currency);
-            test.setCategory(item.getCategory());
-            convertedItems.add(test);
+            Item currencyItem = new Item(item.getLocation(), item.getName(), item.getDescription(), totalFormat, item.getUser());
+            currencyItem.setCurrency(currency);
+            currencyItem.setCategory(item.getCategory());
+            convertedItems.add(currencyItem);
         }
         return convertedItems;
     }
@@ -98,6 +98,7 @@ public class ItemServiceImpl implements ItemService {
         createItem.setName(item.getName());
         createItem.setDescription(item.getDescription());
         createItem.setPrice(item.getPrice());
+        createItem.setUrl(item.getUrl());
         createItem.setUser(currentUser);
 
         Category category = categoryService.getCategoryByType(item.getCategory().getType());
@@ -128,6 +129,9 @@ public class ItemServiceImpl implements ItemService {
             if (item.hasPrice) {
                 currentItem.setPrice(item.getPrice());
             }
+            if (item.getUrl() != null) {
+                currentItem.setUrl(item.getUrl());
+            }
             if (item.getCurrency() != null) {
                 currentItem.setCurrency(item.getCurrency());
             }
@@ -154,8 +158,6 @@ public class ItemServiceImpl implements ItemService {
         } else {
             throw new ValidationException("Not your item to delete");
         }
-
-
     }
 
 

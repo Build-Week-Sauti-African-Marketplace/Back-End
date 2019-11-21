@@ -43,10 +43,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
                          "/logout",
                     "/items/**",
                     "/categories/**",
-                    "/currencies/**")
+                    "/currencies/**",
+                    "image/upload")
             .authenticated()
             .antMatchers("/roles/**",
-                         "/actuator/**")
+                         "/actuator/**",
+                    "/image/uploadform")
             .hasAnyRole("ADMIN")
             .antMatchers("/data/**")
             .hasAnyRole("ADMIN",

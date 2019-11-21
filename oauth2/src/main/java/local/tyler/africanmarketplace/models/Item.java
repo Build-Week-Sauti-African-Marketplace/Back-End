@@ -27,6 +27,8 @@ public class Item {
     @Column(nullable = false)
     private double price;
 
+    private String url;
+
     @Transient
     public boolean hasPrice = false;
 
@@ -119,5 +121,13 @@ public class Item {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
