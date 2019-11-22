@@ -47,7 +47,7 @@ public class SeedData implements CommandLineRunner {
 
     @Override
     public void run(String[] args) throws Exception {
-        Role r1 = new Role("admin");
+        /*Role r1 = new Role("admin");
         Role r2 = new Role("user");
 
         r1 = roleService.save(r1);
@@ -189,10 +189,13 @@ public class SeedData implements CommandLineRunner {
         Item item1 = new Item("there1", "name1", "desck", 120.21, userService.findByName("user"));
         item1.setCurrency(currencyRepository.findByCodeIgnoreCase(currency2.getCode()));
         item1.setCategory(categoryRepository.findByTypeIgnoreCase(category2.getType()));
-        itemRepository.save(item1);
+        itemRepository.save(item1);*/
 
         //List<Item> test = itemService.getItemsByCurrency("aoa");
 
+        /*Currency currency1 = new Currency("United States dollar", "USD", "$");
+        currency1.setValueInUSD(1);
+        currencyRepository.save(currency1);*/
 
 
     }
